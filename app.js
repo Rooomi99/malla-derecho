@@ -1,5 +1,3 @@
-// app.js
-
 // Cargar ramos aprobados guardados o iniciar lista vacía
 let ramosAprobados = JSON.parse(localStorage.getItem('ramosAprobados')) || [];
 
@@ -67,6 +65,10 @@ renderMalla(malla);
 
 function renderMalla(malla) {
   const contenedor = document.getElementById('malla');
+  if (!contenedor) {
+    console.error("No se encontró el contenedor #malla");
+    return;
+  }
   contenedor.innerHTML = '';
 
   // Agrupar ramos por semestre
@@ -80,41 +82,44 @@ function renderMalla(malla) {
   });
 
   // Ordenar semestres y crear columnas
-  Object.keys(semestres).sort((a, b) => a - b).forEach(semestreNum => {
-    const divSemestre = document.createElement('div');
-    divSemestre.classList.add('semestre');
+  Object.keys(semestres)
+    .sort((a, b) => a - b)
+    .forEach(semestreNum => {
+      const divSemestre = document.createElement('div');
+      divSemestre.classList.add('semestre');
 
-    // Título semestre
-    const tituloSemestre = document.createElement('div');
-    tituloSemestre.classList.add('semestre-titulo');
-    tituloSemestre.textContent = `Semestre ${semestreNum}`;
-    divSemestre.appendChild(tituloSemestre);
+      // Título semestre
+      const tituloSemestre = document.createElement('div');
+      tituloSemestre.classList.add('semestre-titulo');
+      tituloSemestre.textContent = `Semestre ${semestreNum}`;
+      divSemestre.appendChild(tituloSemestre);
 
-    // Crear los ramos de ese semestre
-    semestres[semestreNum].forEach(ramo => {
-      const divRamo = document.createElement('div');
-      divRamo.classList.add('ramo');
+      // Crear los ramos de ese semestre
+      semestres[semestreNum].forEach(ramo => {
+        const divRamo = document.createElement('div');
+        divRamo.classList.add('ramo');
 
-      const aprobado = ramosAprobados.includes(ramo.nombre);
-      const prerequisitosCumplidos = ramo.prerrequisitos.every(pr => ramosAprobados.includes(pr));
+        const aprobado = ramosAprobados.includes(ramo.nombre);
+        const prerequisitosCumplidos = ramo.prerrequisitos.every(pr => ramosAprobados.includes(pr));
 
-      if (aprobado) {
-        divRamo.classList.add('aprobado');
-      } else if (!prerequisitosCumplidos && ramo.prerrequisitos.length > 0) {
-        divRamo.classList.add('bloqueado');
-      } else {
-        divRamo.classList.add('pendiente');
-      }
+        if (aprobado) {
+          divRamo.classList.add('aprobado');
+        } else if (!prerequisitosCumplidos && ramo.prerrequisitos.length > 0) {
+          divRamo.classList.add('bloqueado');
+        } else {
+          divRamo.classList.add('pendiente');
+        }
 
-      divRamo.textContent = ramo.nombre;
+        divRamo.textContent = ramo.nombre;
 
-      // Alternar estado aprobado al hacer clic
-      divRamo.addEventListener('click', () => toggleAprobado(ramo.nombre));
-      divSemestre.appendChild(divRamo);
+        // Alternar estado aprobado al hacer clic
+        divRamo.addEventListener('click', () => toggleAprobado(ramo.nombre));
+
+        divSemestre.appendChild(divRamo);
+      });
+
+      contenedor.appendChild(divSemestre);
     });
-
-    contenedor.appendChild(divSemestre);
-  });
 }
 
 function toggleAprobado(nombreRamo) {
