@@ -17,17 +17,26 @@ body {
 /* Contenedor general de la malla: fila con columnas (semestres) */
 #malla {
   display: flex;
-  gap: 20px; /* espacio entre semestres */
+  gap: 20px; /* espacio entre columnas */
   justify-content: center;
+  align-items: flex-start; /* alinear al inicio en vertical */
+  flex-wrap: nowrap; /* evita que los semestres se bajen */
   padding: 10px;
+  overflow-x: auto; /* permite scroll horizontal si hay muchos semestres */
 }
 
 /* Cada columna semestre */
 .semestre {
   display: flex;
   flex-direction: column;
-  gap: 10px; /* espacio entre ramos */
-  min-width: 180px;
+  gap: 10px; /* espacio vertical entre ramos */
+  min-width: 250px; /* ancho fijo para columnas para evitar solapamiento */
+  max-width: 250px;
+  background: #fff0f7; /* un fondo suave para diferenciar semestres */
+  padding: 10px;
+  border-radius: 12px;
+  box-shadow: 0 3px 8px rgba(204, 0, 122, 0.15);
+  box-sizing: border-box;
 }
 
 /* Título del semestre */
@@ -41,16 +50,15 @@ body {
 
 /* Estilo base para todos los ramos */
 .ramo {
-  width: 250px;
   padding: 15px;
   border-radius: 15px;
   font-size: 16px;
   text-align: center;
   background-color: white;
   box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-
   cursor: pointer;
   transition: transform 0.2s;
+  user-select: none; /* evitar selección accidental */
 }
 
 /* Efecto hover */
@@ -77,4 +85,3 @@ body {
   background-color: #f2f2f2;
   opacity: 0.6;
 }
-
