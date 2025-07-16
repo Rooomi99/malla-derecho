@@ -1,7 +1,7 @@
 /* Fondo general de la página */
 body {
   background-color: #ffe6f0; /* rosado claro */
-  font-family: 'Bahnschrift', sans-serif;
+  font-family: 'Aharoni', 'Bahnschrift', sans-serif;
   margin: 0;
   padding: 20px;
   overflow-x: hidden; /* Oculta barra horizontal */
@@ -19,8 +19,9 @@ body {
 #malla {
   display: flex;
   flex-wrap: nowrap; /* No permite que se rompa la fila */
-  overflow-x: auto;  /* Scroll horizontal pero barra oculta */
+  overflow-x: auto;  /* Scroll horizontal */
   gap: 20px;
+  padding-bottom: 10px;
 }
 
 /* Cada columna semestre */
@@ -28,6 +29,10 @@ body {
   display: flex;
   flex-direction: column;
   gap: 10px;
+  background-color: #fde7f0; /* color suave para separar semestres */
+  border-radius: 15px;
+  padding: 10px;
+  min-width: 280px;
 }
 
 /* Título del semestre */
@@ -36,6 +41,7 @@ body {
   margin-bottom: 15px;
   text-align: center;
   color: #cc007a;
+  font-size: 18px;
 }
 
 /* Ramos */
@@ -50,6 +56,7 @@ body {
   border: 2px solid #f7a8c4; /* línea continua rosada suave */
   cursor: pointer;
   transition: transform 0.2s;
+  position: relative;
 }
 
 /* Efecto hover */
@@ -80,6 +87,26 @@ body {
   border-color: #ccc;
 }
 
+/* Tooltip estilo básico */
+.ramo[title]:hover::after {
+  content: attr(title);
+  white-space: pre-line; /* para que \n funcione en tooltip */
+  position: absolute;
+  bottom: 110%;
+  left: 50%;
+  transform: translateX(-50%);
+  background: #cc007a;
+  color: white;
+  padding: 8px 12px;
+  border-radius: 8px;
+  font-size: 13px;
+  min-width: 200px;
+  text-align: center;
+  pointer-events: none;
+  z-index: 100;
+  box-shadow: 0 2px 6px rgba(0,0,0,0.2);
+}
+
 /* Ocultar barra de desplazamiento horizontal (solo Webkit: Chrome, Safari) */
 #malla::-webkit-scrollbar {
   display: none;
@@ -89,4 +116,3 @@ body {
 #malla {
   scrollbar-width: none;
 }
-
