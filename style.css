@@ -1,0 +1,61 @@
+/* Estilo general del cuerpo */
+body {
+  font-family: 'Bahnschrift', sans-serif;
+  background-color: #ffe6f0; /* Rosado suave */
+  padding: 20px;
+  margin: 0;
+}
+
+/* Título principal */
+h1 {
+  color: #d63384; /* Rosado fuerte */
+  text-align: center;
+  margin-bottom: 40px;
+}
+
+/* Título por semestre */
+h2 {
+  margin-top: 30px;
+  color: #c2185b; /* Otro rosado fuerte */
+}
+
+/* Estilo base para cada ramo */
+.ramo {
+  padding: 12px;
+  margin: 8px 0;
+  border-left: 6px solid;
+  border-radius: 6px;
+  box-shadow: 2px 2px 6px rgba(0, 0, 0, 0.1);
+  transition: background-color 0.2s ease;
+}
+
+/* Hover para ramos desbloqueados */
+.ramo:hover {
+  cursor: pointer;
+  opacity: 0.95;
+}
+
+/* ✅ Ramos aprobados */
+.aprobado {
+  background-color: #d0f0f8; /* Celeste claro */
+  border-left-color: #33b5e5; /* Celeste fuerte */
+  text-decoration: line-through;
+  color: #666;
+}
+
+/* ⏳ Ramos pendientes (aún no aprobados pero disponibles) */
+.pendiente {
+  background-color: #fff; /* Fondo blanco */
+  border-left-color: #ffb6c1; /* Rosado claro */
+  color: #333;
+}
+
+/* 🚫 Ramos bloqueados (no cumple prerrequisitos) */
+.bloqueado {
+  background-color: #e0e0e0; /* Gris claro */
+  border-left-color: #aaa; /* Gris más oscuro */
+  color: #888;
+  opacity: 0.7;
+  pointer-events: none; /* No se puede hacer clic */
+  text-decoration: none;
+}
