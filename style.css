@@ -74,10 +74,11 @@ body {
 
 /* Ramos pendientes (desbloqueados y no aprobados) - en color morado */
 .pendiente {
-  color: #6a0dad; /* Morado fuerte para el texto */
-  background-color: #f3e8ff; /* Morado claro para fondo */
-  border-color: #b47be3; /* Borde morado suave */
+  color: #6a0dad; /* Morado fuerte */
+  background-color: #f3e8ff; /* Morado claro */
+  border-color: #b47be3; /* Morado suave */
 }
+
 
 /* Ramos bloqueados */
 .bloqueado {
