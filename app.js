@@ -1,7 +1,7 @@
 // Cargar ramos aprobados guardados o iniciar lista vacía
 let ramosAprobados = JSON.parse(localStorage.getItem('ramosAprobados')) || [];
 
-// Aquí va tu arreglo completo de ramos (puedes agregar o quitar ramos)
+// Tu arreglo completo de ramos (reemplaza con todos tus ramos)
 const malla = [
   { "nombre": "Derecho Romano I", "semestre": 1, "creditos": 5, "prerrequisitos": [] },
   { "nombre": "Fundamentos Filosóficos del Derecho", "semestre": 1, "creditos": 10, "prerrequisitos": [] },
@@ -58,68 +58,59 @@ const malla = [
   { "nombre": "Clínica Jurídica II", "semestre": 10, "creditos": 10, "prerrequisitos": ["Clínica Jurídica I"] }
 ];
 
-// Guardamos en window para que sea accesible en toggleAprobado
+// Guardamos para toggleAprobado
 window.mallaData = malla;
 
 renderMalla(malla);
 
 function renderMalla(malla) {
   const contenedor = document.getElementById('malla');
-  if (!contenedor) {
-    console.error("No se encontró el contenedor #malla");
-    return;
-  }
   contenedor.innerHTML = '';
 
   // Agrupar ramos por semestre
   const semestres = {};
 
   malla.forEach(ramo => {
-    if (!semestres[ramo.semestre]) {
-      semestres[ramo.semestre] = [];
-    }
+    if (!semestres[ramo.semestre]) semestres[ramo.semestre] = [];
     semestres[ramo.semestre].push(ramo);
   });
 
-  // Ordenar semestres y crear columnas
-  Object.keys(semestres)
-    .sort((a, b) => a - b)
-    .forEach(semestreNum => {
-      const divSemestre = document.createElement('div');
-      divSemestre.classList.add('semestre');
+  // Ordenar y mostrar semestres con ramos verticales
+  Object.keys(semestres).sort((a,b) => a - b).forEach(semestreNum => {
+    const divSemestre = document.createElement('div');
+    divSemestre.classList.add('semestre');
 
-      // Título semestre
-      const tituloSemestre = document.createElement('div');
-      tituloSemestre.classList.add('semestre-titulo');
-      tituloSemestre.textContent = `Semestre ${semestreNum}`;
-      divSemestre.appendChild(tituloSemestre);
+    // Título semestre
+    const tituloSemestre = document.createElement('div');
+    tituloSemestre.classList.add('semestre-titulo');
+    tituloSemestre.textContent = `Semestre ${semestreNum}`;
+    divSemestre.appendChild(tituloSemestre);
 
-      // Crear los ramos de ese semestre
-      semestres[semestreNum].forEach(ramo => {
-        const divRamo = document.createElement('div');
-        divRamo.classList.add('ramo');
+    // Ramo(s) de ese semestre
+    semestres[semestreNum].forEach(ramo => {
+      const divRamo = document.createElement('div');
+      divRamo.classList.add('ramo');
 
-        const aprobado = ramosAprobados.includes(ramo.nombre);
-        const prerequisitosCumplidos = ramo.prerrequisitos.every(pr => ramosAprobados.includes(pr));
+      const aprobado = ramosAprobados.includes(ramo.nombre);
+      const prerequisitosCumplidos = ramo.prerrequisitos.every(pr => ramosAprobados.includes(pr));
 
-        if (aprobado) {
-          divRamo.classList.add('aprobado');
-        } else if (!prerequisitosCumplidos && ramo.prerrequisitos.length > 0) {
-          divRamo.classList.add('bloqueado');
-        } else {
-          divRamo.classList.add('pendiente');
-        }
+      if (aprobado) {
+        divRamo.classList.add('aprobado');
+      } else if (!prerequisitosCumplidos && ramo.prerrequisitos.length > 0) {
+        divRamo.classList.add('bloqueado');
+      } else {
+        divRamo.classList.add('pendiente');
+      }
 
-        divRamo.textContent = ramo.nombre;
+      divRamo.textContent = ramo.nombre;
 
-        // Alternar estado aprobado al hacer clic
-        divRamo.addEventListener('click', () => toggleAprobado(ramo.nombre));
-
-        divSemestre.appendChild(divRamo);
-      });
-
-      contenedor.appendChild(divSemestre);
+      // Toggle aprobado con clic
+      divRamo.addEventListener('click', () => toggleAprobado(ramo.nombre));
+      divSemestre.appendChild(divRamo);
     });
+
+    contenedor.appendChild(divSemestre);
+  });
 }
 
 function toggleAprobado(nombreRamo) {
