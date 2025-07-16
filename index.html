@@ -1,23 +1,18 @@
 <!DOCTYPE html>
 <html lang="es">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta charset="UTF-8" />
   <title>Derecho UC</title>
-  <link rel="stylesheet" href="style.css">
+  <link rel="stylesheet" href="style.css" />
 </head>
 <body>
   <h1 class="titulo">Derecho UC</h1>
 
-  <div class="acciones">
-    <input type="text" id="buscador" placeholder="Buscar ramo...">
-    <button onclick="limpiarTodo()">Limpiar Todo</button>
-    <button onclick="alternarModoOscuro()">Modo Oscuro / Claro</button>
+  <div class="controles">
+    <button id="btnLimpiar">Limpiar selección</button>
   </div>
 
-  <div class="creditos" id="creditos">Créditos: 0 de 0</div>
-
-  <div id="malla" class="contenedor-malla"></div>
+  <div id="malla"></div>
 
   <script src="app.js"></script>
 </body>
