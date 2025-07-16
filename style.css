@@ -1,109 +1,189 @@
 body {
   font-family: Arial, sans-serif;
-  margin: 20px;
+  margin: 0;
   background-color: #fff;
   color: #333;
+  padding: 10px;
 }
 
-.titulo {
+header {
   text-align: center;
-  color: #cc6699; /* Rosado suave */
   margin-bottom: 20px;
 }
 
-.controles {
-  text-align: center;
-  margin-bottom: 15px;
+h1 {
+  margin: 0 0 10px 0;
+  font-weight: 700;
 }
 
-button#btnLimpiar {
-  background-color: #cc6699;
-  border: none;
-  color: white;
-  padding: 8px 20px;
+.controles {
+  margin-bottom: 10px;
+  display: flex;
+  justify-content: center;
+  gap: 10px;
+  flex-wrap: wrap;
+}
+
+#buscador {
+  padding: 5px;
   font-size: 16px;
-  border-radius: 6px;
+  width: 200px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+}
+
+button {
+  padding: 6px 12px;
+  font-size: 14px;
+  border: none;
+  border-radius: 5px;
   cursor: pointer;
+  background-color: #d86d9a;
+  color: white;
   transition: background-color 0.3s ease;
 }
 
-button#btnLimpiar:hover {
-  background-color: #b35485;
+button:hover {
+  background-color: #b04c75;
 }
 
-#contenedor-principal {
-  overflow-x: auto;
+#creditos {
+  margin-top: 5px;
+  font-weight: bold;
+  font-size: 16px;
+  text-align: center;
 }
 
-#malla {
+#btnOscuro {
+  background-color: #555;
+}
+
+#btnOscuro:hover {
+  background-color: #333;
+}
+
+main#malla {
   display: flex;
-  gap: 15px;
+  gap: 12px;
   overflow-x: auto;
-  padding-bottom: 10px;
+  padding-bottom: 20px;
 }
 
-/* Cada columna semestre */
 .semestre {
-  background-color: #f9e6f0; /* color suave para separar */
+  background-color: #f6d7e4; /* color suave rosado */
   padding: 10px;
   border-radius: 8px;
-  min-width: 200px;
-  box-sizing: border-box;
+  min-width: 180px;
+  flex-shrink: 0;
+  display: flex;
+  flex-direction: column;
 }
 
 .semestre-titulo {
   font-weight: bold;
   text-align: center;
   margin-bottom: 10px;
-  color: #cc6699;
-  font-size: 1.1rem;
+  color: #a23b62;
+  font-size: 18px;
 }
 
-/* Ramos */
 .ramo {
-  border: 1px solid #cc6699; /* línea continua y suave */
-  border-radius: 6px;
-  padding: 8px 12px;
+  border: 1.5px solid #b07ca2; /* línea continua, color rosado suave */
+  border-radius: 5px;
+  padding: 8px;
   margin-bottom: 8px;
   cursor: pointer;
+  position: relative;
   background-color: #fff;
-  transition: background-color 0.3s ease, color 0.3s ease;
+  transition: background-color 0.3s ease;
   white-space: normal;
+  font-size: 14px;
+  color: #4a2d40;
 }
 
-/* Estados */
 .ramo.aprobado {
-  background-color: #cc6699;
-  color: white;
+  background-color: #cdebd9;
   text-decoration: line-through;
+  color: #2a5d35;
 }
 
 .ramo.bloqueado {
-  background-color: #f2d9e6;
-  color: #999;
+  background-color: #f4d6dc;
+  color: #a85168;
   cursor: not-allowed;
 }
 
-.ramo.pendiente {
-  background-color: #fff0f6;
-  color: #333;
+.ramo.pendiente:hover {
+  background-color: #fce9f1;
 }
 
-/* Tooltip básico */
+/* Tooltip */
 .ramo[data-tooltip]:hover::after {
   content: attr(data-tooltip);
-  position: absolute;
-  background: #cc6699;
-  color: #fff;
-  padding: 6px 10px;
-  border-radius: 6px;
-  font-size: 0.85rem;
   white-space: pre-line;
-  top: 100%;
-  left: 50%;
-  transform: translateX(-50%);
-  margin-top: 6px;
-  z-index: 100;
-  pointer-events: none;
-  max-width: 220px;
+  position: absolute;
+  left: 100%;
+  top: 50%;
+  transform: translate(10px, -50%);
+  background: #f6d7e4;
+  color: #4a2d40;
+  padding: 8px;
+  border-radius: 5px;
+  font-size: 12px;
+  box-shadow: 0 0 6px rgba(0,0,0,0.1);
+  width: 180px;
+  z-index: 10;
+}
+
+/* Modo oscuro */
+body.oscuro {
+  background-color: #1e1e1e;
+  color: #ddd;
+}
+
+body.oscuro .semestre {
+  background-color: #333;
+}
+
+body.oscuro .semestre-titulo {
+  color: #f9a1c1;
+}
+
+body.oscuro .ramo {
+  background-color: #444;
+  border-color: #f9a1c1;
+  color: #eee;
+}
+
+body.oscuro .ramo.aprobado {
+  background-color: #4b7c4b;
+  color: #d4f1d4;
+  text-decoration: line-through;
+}
+
+body.oscuro .ramo.bloqueado {
+  background-color: #73353f;
+  color: #f2a7b8;
+}
+
+body.oscuro .ramo.pendiente:hover {
+  background-color: #59263c;
+}
+
+body.oscuro button {
+  background-color: #9e5a7c;
+}
+
+body.oscuro button:hover {
+  background-color: #c682ac;
+}
+
+/* Quitar barra de desplazamiento visible */
+main#malla::-webkit-scrollbar {
+  display: none;
+}
+
+main#malla {
+  -ms-overflow-style: none;  /* IE and Edge */
+  scrollbar-width: none;  /* Firefox */
 }
