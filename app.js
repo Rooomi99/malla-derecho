@@ -1,7 +1,7 @@
-[16-07-25, 16:02:28] Romi 🦋: // Cargar ramos aprobados guardados o iniciar lista vacía
+// Cargar ramos aprobados guardados o iniciar lista vacía
 let ramosAprobados = JSON.parse(localStorage.getItem('ramosAprobados')) || [];
 
-// Tu arreglo completo de ramos (copiar y pegar tu lista completa aquí)
+// Malla con todos los ramos, agregados los optativos faltantes
 const malla = [
   { "nombre": "Derecho Romano I", "semestre": 1, "creditos": 5, "prerrequisitos": [] },
   { "nombre": "Fundamentos Filosóficos del Derecho", "semestre": 1, "creditos": 10, "prerrequisitos": [] },
@@ -48,8 +48,12 @@ const malla = [
   { "nombre": "Contratos Mercantiles y Concursos", "semestre": 8, "creditos": 10, "prerrequisitos": [] },
   { "nombre": "Electivo en otra disciplina", "semestre": 8, "creditos": 10, "prerrequisitos": [] },
   { "nombre": "Derecho Sucesorio", "semestre": 9, "creditos": 10, "prerrequisitos": ["Obligaciones"] },
-  { "nombre": "Optativo de Profundización (Ética Profesional)", "semestre": 9, "creditos": 5, "prerrequisitos": [] },
-  { "nombre": "Optativo de Profundización", "semestre": 9, "creditos": 5, "prerrequisitos": [] },
+  { "nombre": "Optativo de Profundización 1", "semestre": 9, "creditos": 5, "prerrequisitos": [] },
+  { "nombre": "Optativo de Profundización 2", "semestre": 9, "creditos": 5, "prerrequisitos": [] },
+  { "nombre": "Optativo de Profundización 1", "semestre": 10, "creditos": 5, "prerrequisitos": [] },
+  { "nombre": "Optativo de Profundización 2", "semestre": 10, "creditos": 5, "prerrequisitos": [] },
+  { "nombre": "Optativo de Profundización 3", "semestre": 10, "creditos": 5, "prerrequisitos": [] },
+  { "nombre": "Optativo de Profundización 4", "semestre": 10, "creditos": 5, "prerrequisitos": [] },
   { "nombre": "Derecho Tributario I", "semestre": 9, "creditos": 10, "prerrequisitos": ["Derecho de Sociedades"] },
   { "nombre": "Clínica Jurídica I", "semestre": 9, "creditos": 10, "prerrequisitos": [] },
   { "nombre": "Derecho Internacional Privado", "semestre": 10, "creditos": 5, "prerrequisitos": ["Derecho Sucesorio"] },
@@ -58,7 +62,7 @@ const malla = [
   { "nombre": "Clínica Jurídica II", "semestre": 10, "creditos": 10, "prerrequisitos": ["Clínica Jurídica I"] }
 ];
 
-// Guardamos para toggleAprobado
+// Guardamos para referencia global en funciones
 window.mallaData = malla;
 
 renderMalla(malla);
@@ -82,19 +86,23 @@ function renderMalla(malla) {
     // Título semestre
     const tituloSemestre = document.createElement('div');
     tituloSemestre.classList.add('semestre-titulo');
-    tituloSemestre.textContent = ⁠ Semestre ${semestreNum} ⁠;
+    tituloSemestre.textContent = `Semestre ${semestreNum}`;
     divSemestre.appendChild(tituloSemestre);
 
     semestres[semestreNum].forEach(ramo => {
       const divRamo = document.createElement('div');
       divRamo.classList.add('ramo');
 
-      // ID único para el ramo
-      const idRamo = ⁠ ${ramo.nombre} (${ramo.semestre}) ⁠;
+      // ID único para el ramo (nombre + semestre para diferenciar electivos)
+      const idRamo = `${ramo.nombre} (${ramo.semestre})`;
+
+      // Construir texto para tooltip con créditos y prerequisitos
+      const prereqText = ramo.prerrequisitos.length > 0 ? ramo.prerrequisitos.join(', ') : 'Ninguno';
+      divRamo.setAttribute('title', `Créditos: ${ramo.creditos}\nPrerrequisitos: ${prereqText}`);
 
       const aprobado = ramosAprobados.includes(idRamo);
       const prerequisitosCumplidos = ramo.prerrequisitos.every(pr => {
-        // Asumimos que prerrequisitos solo usan nombre, no electivos repetidos
+        // Comprobar si al menos uno de los ramos aprobados contiene el nombre del prerequisito
         return ramosAprobados.some(r => r.startsWith(pr));
       });
 
@@ -128,16 +136,3 @@ function toggleAprobado(idRamo) {
   localStorage.setItem('ramosAprobados', JSON.stringify(ramosAprobados));
   renderMalla(window.mallaData);
 }
-[16-07-25, 16:02:42] Romi 🦋: <!DOCTYPE html>
-<html lang="es">
-<head>
-  <meta charset="UTF-8" />
-  <title>Malla Derecho UC</title>
-  <link rel="stylesheet" href="style.css" />
-</head>
-<body>
-  <h1 class="titulo">Derecho UC</h1>
-  <div id="malla"></div>
-  <script src="app.js"></script>
-</body>
-</html>
