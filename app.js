@@ -29,9 +29,6 @@ const malla = [
   // Agrega el resto de los ramos aquí para completar la malla...
 ];
 
-renderMalla(malla);
-actualizarCreditos();
-
 document.getElementById('buscador').addEventListener('input', filtrarRamos);
 document.getElementById('btnLimpiar').addEventListener('click', () => {
   ramosAprobados = [];
@@ -43,14 +40,19 @@ document.getElementById('btnOscuro').addEventListener('click', () => {
   document.body.classList.toggle('oscuro');
 });
 
+renderMalla(malla);
+actualizarCreditos();
+
 function renderMalla(malla) {
   const contenedor = document.getElementById('malla');
   contenedor.innerHTML = '';
   const semestres = {};
 
   malla.forEach((ramo, index) => {
+    // Crear un ID único por ramo usando nombre + semestre + índice
     const idUnico = `${ramo.nombre}-${ramo.semestre}-${index}`;
     ramo._id = idUnico;
+
     if (!semestres[ramo.semestre]) semestres[ramo.semestre] = [];
     semestres[ramo.semestre].push(ramo);
   });
@@ -117,7 +119,7 @@ function actualizarCreditos() {
   let total = 0;
   let acumulado = 0;
 
-  malla.forEach((ramo, index) => {
+  malla.forEach(ramo => {
     total += ramo.creditos;
     if (ramosAprobados.includes(ramo._id)) {
       acumulado += ramo.creditos;
@@ -126,3 +128,4 @@ function actualizarCreditos() {
 
   document.getElementById('creditos').textContent = `Créditos: ${acumulado} de ${total}`;
 }
+
