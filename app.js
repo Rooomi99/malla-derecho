@@ -86,7 +86,7 @@ function renderMalla(malla) {
     // Título semestre
     const tituloSemestre = document.createElement('div');
     tituloSemestre.classList.add('semestre-titulo');
-    tituloSemestre.textContent = `Semestre ${semestreNum}`;
+  tituloSemestre.textContent = `Semestre ${semestreNum}`;
     divSemestre.appendChild(tituloSemestre);
 
     semestres[semestreNum].forEach(ramo => {
