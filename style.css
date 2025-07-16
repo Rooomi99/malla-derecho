@@ -22,16 +22,21 @@ body {
   flex-direction: row;
   flex-wrap: nowrap;
   overflow-x: auto;
-  gap: 40px; /* espacio entre columnas de semestre */
+  gap: 40px;
   padding-bottom: 20px;
   margin-bottom: 30px;
+
+  scrollbar-width: none; /* Firefox */
+}
+#malla::-webkit-scrollbar {
+  display: none; /* Chrome, Safari y Edge */
 }
 
 /* Columna por semestre */
 .semestre {
   display: flex;
   flex-direction: column;
-  gap: 20px; /* espacio entre ramos */
+  gap: 20px;
   min-width: 240px;
   flex-shrink: 0;
 }
@@ -48,12 +53,11 @@ body {
 .ramo {
   width: 100%;
   padding: 12px;
-  border-radius: 15px;
   font-size: 14px;
   text-align: center;
   background-color: white;
-  border: 2px dashed #cc007a; /* borde entrelineado */
-  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  border: 2px dashed #f49ac2; /* rosado claro y punteado */
+  border-radius: 12px;
   cursor: pointer;
   transition: transform 0.2s;
   word-wrap: break-word;
@@ -71,23 +75,4 @@ body {
 
 .pendiente {
   color: #00bfff;
-  background-color: #f0fbff;
-}
-
-.bloqueado {
-  color: #aaa;
-  background-color: #f2f2f2;
-  opacity: 0.6;
-}
-
-/* Estilo para barra scroll */
-#malla::-webkit-scrollbar {
-  height: 12px;
-}
-#malla::-webkit-scrollbar-thumb {
-  background-color: #cc007a;
-  border-radius: 6px;
-}
-#malla::-webkit-scrollbar-track {
-  background-color: #ffe6f0;
-}
+  backg
