@@ -1,91 +1,199 @@
-/* Fondo general de la página */
+/* Fondo general */
 body {
-  background-color: #ffe6f0; /* rosado claro */
+  background-color: #ffe6f0;
   font-family: 'Bahnschrift', sans-serif;
   margin: 0;
   padding: 20px;
-  overflow-x: hidden; /* Oculta barra horizontal */
+  overflow-x: hidden;
 }
 
 /* Título principal */
 .titulo {
-  color: #cc007a; /* rosado fuerte */
+  color: #cc007a;
   text-align: center;
   font-size: 32px;
   margin-bottom: 30px;
 }
 
-/* Contenedor de semestres (filas horizontales) */
-#malla {
+/* Acciones */
+.acciones {
   display: flex;
-  flex-wrap: nowrap; /* No permite que se rompa la fila */
-  overflow-x: auto;  /* Scroll horizontal pero barra oculta */
-  gap: 20px;
+  justify-content: center;
+  gap: 10px;
+  margin-bottom: 20px;
+  flex-wrap: wrap;
 }
 
-/* Cada columna semestre */
+#buscador {
+  padding: 10px;
+  font-size: 16px;
+  border-radius: 5px;
+  border: 1px solid #ccc;
+  width: 200px;
+}
+
+button {
+  padding: 10px 15px;
+  font-size: 16px;
+  border-radius: 5px;
+  border: none;
+  background-color: #cc007a;
+  color: white;
+  cursor: pointer;
+  transition: background-color 0.3s;
+}
+
+button:hover {
+  background-color: #a5005f;
+}
+
+/* Contenedor de malla */
+.contenedor-malla {
+  display: flex;
+  overflow-x: auto;
+  gap: 20px;
+  padding-bottom: 20px;
+}
+
+/* Columna de semestre */
 .semestre {
+  background-color: #fff0f5;
+  padding: 10px;
+  border-radius: 10px;
+  min-width: 240px;
   display: flex;
   flex-direction: column;
   gap: 10px;
 }
 
-/* Título del semestre */
 .semestre-titulo {
   font-weight: bold;
-  margin-bottom: 15px;
   text-align: center;
+  margin-bottom: 10px;
   color: #cc007a;
 }
 
-/* Ramos */
+/* Estilo base de ramos */
 .ramo {
-  width: 250px;
-  padding: 15px;
-  border-radius: 15px;
-  font-size: 16px;
+  padding: 12px;
+  border: 2px solid #d88ca0;
+  border-radius: 10px;
   text-align: center;
   background-color: white;
-  box-shadow: 0 4px 6px rgba(0,0,0,0.1);
-  border: 2px solid #f7a8c4; /* línea continua rosada suave */
+  box-shadow: 0 2px 5px rgba(0,0,0,0.1);
   cursor: pointer;
   transition: transform 0.2s;
+  position: relative;
 }
 
-/* Efecto hover */
 .ramo:hover {
   transform: scale(1.03);
 }
 
-/* Ramos aprobados */
+/* Tooltip */
+.ramo::after {
+  content: attr(data-tooltip);
+  position: absolute;
+  bottom: 110%;
+  left: 50%;
+  transform: translateX(-50%);
+  background-color: #333;
+  color: white;
+  padding: 5px;
+  border-radius: 5px;
+  font-size: 12px;
+  white-space: pre-line;
+  display: none;
+  z-index: 10;
+}
+
+.ramo:hover::after {
+  display: block;
+}
+
+/* Estados */
 .aprobado {
   color: #00bfff;
   text-decoration: line-through;
   background-color: #e0f7ff;
-  border-color: #00bfff;
 }
 
-/* Ramos desbloqueados */
 .pendiente {
   color: #00bfff;
   background-color: #f0fbff;
-  border-color: #00bfff;
 }
 
-/* Ramos bloqueados */
 .bloqueado {
   color: #aaa;
   background-color: #f2f2f2;
   opacity: 0.6;
-  border-color: #ccc;
 }
 
-/* Ocultar barra de desplazamiento horizontal (solo Webkit: Chrome, Safari) */
-#malla::-webkit-scrollbar {
+/* Créditos */
+.creditos {
+  text-align: center;
+  margin-bottom: 20px;
+  font-size: 18px;
+  color: #444;
+}
+
+/* Modo oscuro */
+body.oscuro {
+  background-color: #222;
+  color: white;
+}
+
+body.oscuro .titulo,
+body.oscuro .semestre-titulo {
+  color: #ffb6c1;
+}
+
+body.oscuro .ramo {
+  background-color: #333;
+  border-color: #ffb6c1;
+  color: white;
+}
+
+body.oscuro .ramo.aprobado {
+  background-color: #003f5c;
+  color: #7ed6df;
+}
+
+body.oscuro .ramo.pendiente {
+  background-color: #2f4f4f;
+  color: #7ed6df;
+}
+
+body.oscuro .ramo.bloqueado {
+  background-color: #444;
+  color: #999;
+  opacity: 0.5;
+}
+
+/* Ocultar barra de desplazamiento */
+.contenedor-malla::-webkit-scrollbar {
   display: none;
 }
 
-/* Para Firefox */
-#malla {
+.contenedor-malla {
+  -ms-overflow-style: none;
   scrollbar-width: none;
 }
+
+/* Estilos para impresión */
+@media print {
+  .acciones, .creditos {
+    display: none;
+  }
+  .ramo {
+    page-break-inside: avoid;
+  }
+  body {
+    background-color: white;
+    color: black;
+  }
+  .ramo {
+    border: 1px solid black;
+  }
+}
+
