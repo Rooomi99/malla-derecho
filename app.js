@@ -1,7 +1,7 @@
 // Cargar ramos aprobados guardados o iniciar lista vacía
 let ramosAprobados = JSON.parse(localStorage.getItem('ramosAprobados')) || [];
 
-// Tu arreglo completo de ramos (reemplaza con todos tus ramos)
+// Tu arreglo completo de ramos (copiar y pegar tu lista completa aquí)
 const malla = [
   { "nombre": "Derecho Romano I", "semestre": 1, "creditos": 5, "prerrequisitos": [] },
   { "nombre": "Fundamentos Filosóficos del Derecho", "semestre": 1, "creditos": 10, "prerrequisitos": [] },
@@ -75,7 +75,6 @@ function renderMalla(malla) {
     semestres[ramo.semestre].push(ramo);
   });
 
-  // Ordenar y mostrar semestres con ramos verticales
   Object.keys(semestres).sort((a,b) => a - b).forEach(semestreNum => {
     const divSemestre = document.createElement('div');
     divSemestre.classList.add('semestre');
@@ -86,13 +85,18 @@ function renderMalla(malla) {
     tituloSemestre.textContent = `Semestre ${semestreNum}`;
     divSemestre.appendChild(tituloSemestre);
 
-    // Ramo(s) de ese semestre
     semestres[semestreNum].forEach(ramo => {
       const divRamo = document.createElement('div');
       divRamo.classList.add('ramo');
 
-      const aprobado = ramosAprobados.includes(ramo.nombre);
-      const prerequisitosCumplidos = ramo.prerrequisitos.every(pr => ramosAprobados.includes(pr));
+      // ID único para el ramo
+      const idRamo = `${ramo.nombre} (${ramo.semestre})`;
+
+      const aprobado = ramosAprobados.includes(idRamo);
+      const prerequisitosCumplidos = ramo.prerrequisitos.every(pr => {
+        // Asumimos que prerrequisitos solo usan nombre, no electivos repetidos
+        return ramosAprobados.some(r => r.startsWith(pr));
+      });
 
       if (aprobado) {
         divRamo.classList.add('aprobado');
@@ -104,8 +108,7 @@ function renderMalla(malla) {
 
       divRamo.textContent = ramo.nombre;
 
-      // Toggle aprobado con clic
-      divRamo.addEventListener('click', () => toggleAprobado(ramo.nombre));
+      divRamo.addEventListener('click', () => toggleAprobado(idRamo));
       divSemestre.appendChild(divRamo);
     });
 
@@ -113,13 +116,13 @@ function renderMalla(malla) {
   });
 }
 
-function toggleAprobado(nombreRamo) {
-  const index = ramosAprobados.indexOf(nombreRamo);
+function toggleAprobado(idRamo) {
+  const index = ramosAprobados.indexOf(idRamo);
 
   if (index >= 0) {
     ramosAprobados.splice(index, 1);
   } else {
-    ramosAprobados.push(nombreRamo);
+    ramosAprobados.push(idRamo);
   }
 
   localStorage.setItem('ramosAprobados', JSON.stringify(ramosAprobados));
