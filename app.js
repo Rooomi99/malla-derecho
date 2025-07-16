@@ -136,3 +136,5 @@ function toggleAprobado(idRamo) {
   localStorage.setItem('ramosAprobados', JSON.stringify(ramosAprobados));
   renderMalla(window.mallaData);
 }
+
+  
