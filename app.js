@@ -1,9 +1,7 @@
 // app.js
 
-// Lista de ramos aprobados (guardados en el navegador)
 let ramosAprobados = JSON.parse(localStorage.getItem('ramosAprobados')) || [];
 
-// Malla curricular (copiada desde malla.json)
 const malla = [
   { "nombre": "Derecho Romano I", "semestre": 1, "creditos": 5, "prerrequisitos": [] },
   { "nombre": "Fundamentos Filosóficos del Derecho", "semestre": 1, "creditos": 10, "prerrequisitos": [] },
@@ -60,38 +58,56 @@ const malla = [
   { "nombre": "Clínica Jurídica II", "semestre": 10, "creditos": 10, "prerrequisitos": ["Clínica Jurídica I"] }
 ];
 
-// Renderizar la malla
 renderMalla(malla);
 window.mallaData = malla;
 
-// Función para mostrar ramos
 function renderMalla(malla) {
   const contenedor = document.getElementById('malla');
   contenedor.innerHTML = '';
 
+  const semestres = {};
+
   malla.forEach(ramo => {
-    const div = document.createElement('div');
-    div.classList.add('ramo');
-
-    const aprobado = ramosAprobados.includes(ramo.nombre);
-    const prerequisitosCumplidos = ramo.prerrequisitos.every(pr => ramosAprobados.includes(pr));
-
-    if (aprobado) {
-      div.classList.add('aprobado');
-    } else if (!prerequisitosCumplidos && ramo.prerrequisitos.length > 0) {
-      div.classList.add('bloqueado');
-    } else {
-      div.classList.add('pendiente');
+    if (!semestres[ramo.semestre]) {
+      semestres[ramo.semestre] = [];
     }
+    semestres[ramo.semestre].push(ramo);
+  });
 
-    div.textContent = `${ramo.nombre} (Sem ${ramo.semestre})`;
+  Object.keys(semestres).sort((a, b) => a - b).forEach(semestreNum => {
+    const divSemestre = document.createElement('div');
+    divSemestre.classList.add('semestre');
 
-    div.addEventListener('click', () => toggleAprobado(ramo.nombre));
-    contenedor.appendChild(div);
+    const tituloSemestre = document.createElement('div');
+    tituloSemestre.classList.add('semestre-titulo');
+    tituloSemestre.textContent = `Semestre ${semestreNum}`;
+    divSemestre.appendChild(tituloSemestre);
+
+    semestres[semestreNum].forEach(ramo => {
+      const divRamo = document.createElement('div');
+      divRamo.classList.add('ramo');
+
+      const aprobado = ramosAprobados.includes(ramo.nombre);
+      const prerequisitosCumplidos = ramo.prerrequisitos.every(pr => ramosAprobados.includes(pr));
+
+      if (aprobado) {
+        divRamo.classList.add('aprobado');
+      } else if (!prerequisitosCumplidos && ramo.prerrequisitos.length > 0) {
+        divRamo.classList.add('bloqueado');
+      } else {
+        divRamo.classList.add('pendiente');
+      }
+
+      divRamo.textContent = ramo.nombre;
+
+      divRamo.addEventListener('click', () => toggleAprobado(ramo.nombre));
+      divSemestre.appendChild(divRamo);
+    });
+
+    contenedor.appendChild(divSemestre);
   });
 }
 
-// Marcar o desmarcar como aprobado
 function toggleAprobado(nombreRamo) {
   const index = ramosAprobados.indexOf(nombreRamo);
 
@@ -104,6 +120,3 @@ function toggleAprobado(nombreRamo) {
   localStorage.setItem('ramosAprobados', JSON.stringify(ramosAprobados));
   renderMalla(window.mallaData);
 }
-
-
-
