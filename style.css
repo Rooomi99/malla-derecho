@@ -28,6 +28,7 @@ body {
 
   scrollbar-width: none; /* Firefox */
 }
+
 #malla::-webkit-scrollbar {
   display: none; /* Chrome, Safari y Edge */
 }
@@ -56,7 +57,7 @@ body {
   font-size: 14px;
   text-align: center;
   background-color: white;
-  border: 2px dashed #f49ac2; /* rosado claro y punteado */
+  border: 2px solid #f7a8c4; /* borde sólido rosado claro */
   border-radius: 12px;
   cursor: pointer;
   transition: transform 0.2s;
@@ -75,4 +76,11 @@ body {
 
 .pendiente {
   color: #00bfff;
-  backg
+  background-color: #f0fbff;
+}
+
+.bloqueado {
+  color: #aaa;
+  background-color: #f2f2f2;
+  opacity: 0.6;
+}
