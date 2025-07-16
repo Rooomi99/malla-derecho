@@ -1,189 +1,92 @@
+/* Fondo general de la página */
 body {
-  font-family: Arial, sans-serif;
+  background-color: #ffe6f0; /* rosado claro */
+  font-family: 'Bahnschrift', sans-serif;
   margin: 0;
-  background-color: #fff;
-  color: #333;
-  padding: 10px;
+  padding: 20px;
+  overflow-x: hidden; /* Oculta barra horizontal */
 }
 
-header {
+/* Título principal */
+.titulo {
+  color: #cc007a; /* rosado fuerte */
   text-align: center;
-  margin-bottom: 20px;
+  font-size: 32px;
+  margin-bottom: 30px;
 }
 
-h1 {
-  margin: 0 0 10px 0;
-  font-weight: 700;
-}
-
-.controles {
-  margin-bottom: 10px;
+/* Contenedor de semestres (filas horizontales) */
+#malla {
   display: flex;
-  justify-content: center;
-  gap: 10px;
-  flex-wrap: wrap;
+  flex-wrap: nowrap; /* No permite que se rompa la fila */
+  overflow-x: auto;  /* Scroll horizontal pero barra oculta */
+  gap: 20px;
 }
 
-#buscador {
-  padding: 5px;
-  font-size: 16px;
-  width: 200px;
-  border: 1px solid #ccc;
-  border-radius: 5px;
-}
-
-button {
-  padding: 6px 12px;
-  font-size: 14px;
-  border: none;
-  border-radius: 5px;
-  cursor: pointer;
-  background-color: #d86d9a;
-  color: white;
-  transition: background-color 0.3s ease;
-}
-
-button:hover {
-  background-color: #b04c75;
-}
-
-#creditos {
-  margin-top: 5px;
-  font-weight: bold;
-  font-size: 16px;
-  text-align: center;
-}
-
-#btnOscuro {
-  background-color: #555;
-}
-
-#btnOscuro:hover {
-  background-color: #333;
-}
-
-main#malla {
-  display: flex;
-  gap: 12px;
-  overflow-x: auto;
-  padding-bottom: 20px;
-}
-
+/* Cada columna semestre */
 .semestre {
-  background-color: #f6d7e4; /* color suave rosado */
-  padding: 10px;
-  border-radius: 8px;
-  min-width: 180px;
-  flex-shrink: 0;
   display: flex;
   flex-direction: column;
+  gap: 10px;
 }
 
+/* Título del semestre */
 .semestre-titulo {
   font-weight: bold;
+  margin-bottom: 15px;
   text-align: center;
-  margin-bottom: 10px;
-  color: #a23b62;
-  font-size: 18px;
+  color: #cc007a;
 }
 
+/* Ramos */
 .ramo {
-  border: 1.5px solid #b07ca2; /* línea continua, color rosado suave */
-  border-radius: 5px;
-  padding: 8px;
-  margin-bottom: 8px;
+  width: 250px;
+  padding: 15px;
+  border-radius: 15px;
+  font-size: 16px;
+  text-align: center;
+  background-color: white;
+  box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+  border: 2px solid #f7a8c4; /* línea continua rosada suave */
   cursor: pointer;
-  position: relative;
-  background-color: #fff;
-  transition: background-color 0.3s ease;
-  white-space: normal;
-  font-size: 14px;
-  color: #4a2d40;
+  transition: transform 0.2s;
 }
 
-.ramo.aprobado {
-  background-color: #cdebd9;
+/* Efecto hover */
+.ramo:hover {
+  transform: scale(1.03);
+}
+
+/* Ramos aprobados */
+.aprobado {
+  color: #00bfff;
   text-decoration: line-through;
-  color: #2a5d35;
+  background-color: #e0f7ff;
+  border-color: #00bfff;
 }
 
-.ramo.bloqueado {
-  background-color: #f4d6dc;
-  color: #a85168;
-  cursor: not-allowed;
+/* Ramos desbloqueados */
+.pendiente {
+  color: #00bfff;
+  background-color: #f0fbff;
+  border-color: #00bfff;
 }
 
-.ramo.pendiente:hover {
-  background-color: #fce9f1;
+/* Ramos bloqueados */
+.bloqueado {
+  color: #aaa;
+  background-color: #f2f2f2;
+  opacity: 0.6;
+  border-color: #ccc;
 }
 
-/* Tooltip */
-.ramo[data-tooltip]:hover::after {
-  content: attr(data-tooltip);
-  white-space: pre-line;
-  position: absolute;
-  left: 100%;
-  top: 50%;
-  transform: translate(10px, -50%);
-  background: #f6d7e4;
-  color: #4a2d40;
-  padding: 8px;
-  border-radius: 5px;
-  font-size: 12px;
-  box-shadow: 0 0 6px rgba(0,0,0,0.1);
-  width: 180px;
-  z-index: 10;
-}
-
-/* Modo oscuro */
-body.oscuro {
-  background-color: #1e1e1e;
-  color: #ddd;
-}
-
-body.oscuro .semestre {
-  background-color: #333;
-}
-
-body.oscuro .semestre-titulo {
-  color: #f9a1c1;
-}
-
-body.oscuro .ramo {
-  background-color: #444;
-  border-color: #f9a1c1;
-  color: #eee;
-}
-
-body.oscuro .ramo.aprobado {
-  background-color: #4b7c4b;
-  color: #d4f1d4;
-  text-decoration: line-through;
-}
-
-body.oscuro .ramo.bloqueado {
-  background-color: #73353f;
-  color: #f2a7b8;
-}
-
-body.oscuro .ramo.pendiente:hover {
-  background-color: #59263c;
-}
-
-body.oscuro button {
-  background-color: #9e5a7c;
-}
-
-body.oscuro button:hover {
-  background-color: #c682ac;
-}
-
-/* Quitar barra de desplazamiento visible */
-main#malla::-webkit-scrollbar {
+/* Ocultar barra de desplazamiento horizontal (solo Webkit: Chrome, Safari) */
+#malla::-webkit-scrollbar {
   display: none;
 }
 
-main#malla {
-  -ms-overflow-style: none;  /* IE and Edge */
-  scrollbar-width: none;  /* Firefox */
+/* Para Firefox */
+#malla {
+  scrollbar-width: none;
 }
+
