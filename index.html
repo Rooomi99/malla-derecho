@@ -2,17 +2,22 @@
 <html lang="es">
 <head>
   <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>Derecho UC</title>
   <link rel="stylesheet" href="style.css" />
 </head>
 <body>
-  <h1 class="titulo">Derecho UC</h1>
+  <header>
+    <h1>Derecho UC</h1>
+    <div class="controles">
+      <input type="text" id="buscador" placeholder="Buscar ramo..." />
+      <button id="btnLimpiar">Limpiar selección</button>
+      <button id="btnOscuro">Modo Oscuro</button>
+    </div>
+    <div id="creditos">Créditos: 0 de 0</div>
+  </header>
 
-  <div class="controles">
-    <button id="btnLimpiar">Limpiar selección</button>
-  </div>
-
-  <div id="malla"></div>
+  <main id="malla"></main>
 
   <script src="app.js"></script>
 </body>
