@@ -1,13 +1,24 @@
 <!DOCTYPE html>
 <html lang="es">
 <head>
-  <meta charset="UTF-8" />
-  <title>Malla Derecho UC</title>
-  <link rel="stylesheet" href="style.css" />
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Derecho UC</title>
+  <link rel="stylesheet" href="style.css">
 </head>
 <body>
   <h1 class="titulo">Derecho UC</h1>
-  <div id="malla"></div>
+
+  <div class="acciones">
+    <input type="text" id="buscador" placeholder="Buscar ramo...">
+    <button onclick="limpiarTodo()">Limpiar Todo</button>
+    <button onclick="alternarModoOscuro()">Modo Oscuro / Claro</button>
+  </div>
+
+  <div class="creditos" id="creditosInfo">Créditos: 0</div>
+
+  <div id="malla" class="contenedor-malla"></div>
+
   <script src="app.js"></script>
 </body>
 </html>
