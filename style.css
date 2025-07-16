@@ -1,61 +1,54 @@
-/* Estilo general del cuerpo */
+/* Fondo general de la página */
 body {
+  background-color: #ffe6f0; /* rosado claro */
   font-family: 'Bahnschrift', sans-serif;
-  background-color: #ffe6f0; /* Rosado suave */
-  padding: 20px;
   margin: 0;
+  padding: 20px;
 }
 
 /* Título principal */
-h1 {
-  color: #d63384; /* Rosado fuerte */
+.titulo {
+  color: #cc007a; /* rosado fuerte */
   text-align: center;
-  margin-bottom: 40px;
+  font-size: 32px;
+  margin-bottom: 30px;
 }
 
-/* Título por semestre */
-h2 {
-  margin-top: 30px;
-  color: #c2185b; /* Otro rosado fuerte */
+/* Contenedor de ramos */
+#malla {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 15px;
 }
 
-/* Estilo base para cada ramo */
+/* Estilo base para todos los ramos */
 .ramo {
-  padding: 12px;
-  margin: 8px 0;
-  border-left: 6px solid;
-  border-radius: 6px;
-  box-shadow: 2px 2px 6px rgba(0, 0, 0, 0.1);
-  transition: background-color 0.2s ease;
+  width: 250px;
+  padding: 15px;
+  border-radius: 15px;
+  font-size: 16px;
+  text-align: center;
+  background-color: white;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
 }
 
-/* Hover para ramos desbloqueados */
-.ramo:hover {
-  cursor: pointer;
-  opacity: 0.95;
-}
-
-/* ✅ Ramos aprobados */
+/* Ramos aprobados: celeste + tachado */
 .aprobado {
-  background-color: #d0f0f8; /* Celeste claro */
-  border-left-color: #33b5e5; /* Celeste fuerte */
+  color: #00bfff;
   text-decoration: line-through;
-  color: #666;
+  background-color: #e0f7ff;
 }
 
-/* ⏳ Ramos pendientes (aún no aprobados pero disponibles) */
+/* Ramos desbloqueados pero no aprobados: celeste sin tachar */
 .pendiente {
-  background-color: #fff; /* Fondo blanco */
-  border-left-color: #ffb6c1; /* Rosado claro */
-  color: #333;
+  color: #00bfff;
+  background-color: #f0fbff;
 }
 
-/* 🚫 Ramos bloqueados (no cumple prerrequisitos) */
+/* Ramos bloqueados: gris y opaco */
 .bloqueado {
-  background-color: #e0e0e0; /* Gris claro */
-  border-left-color: #aaa; /* Gris más oscuro */
-  color: #888;
-  opacity: 0.7;
-  pointer-events: none; /* No se puede hacer clic */
-  text-decoration: none;
+  color: #aaa;
+  background-color: #f2f2f2;
+  opacity: 0.6;
 }
