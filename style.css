@@ -14,17 +14,34 @@ body {
   margin-bottom: 30px;
 }
 
-/* Contenedor de ramos */
+/* Contenedor general de la malla: fila con columnas (semestres) */
 #malla {
   display: flex;
-  flex-wrap: wrap;
+  gap: 20px; /* espacio entre columnas de semestres */
   justify-content: center;
-  gap: 15px;
+  padding: 10px;
+}
+
+/* Cada columna semestre */
+.semestre {
+  display: flex;
+  flex-direction: column;
+  gap: 10px; /* espacio entre ramos */
+  min-width: 180px;
+}
+
+/* Título del semestre */
+.semestre-titulo {
+  font-weight: bold;
+  font-size: 18px;
+  color: #cc007a;
+  text-align: center;
+  margin-bottom: 10px;
 }
 
 /* Estilo base para todos los ramos */
 .ramo {
-  width: 250px;
+  width: 100%;
   padding: 15px;
   border-radius: 15px;
   font-size: 16px;
@@ -60,4 +77,3 @@ body {
   background-color: #f2f2f2;
   opacity: 0.6;
 }
-
