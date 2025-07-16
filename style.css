@@ -1,87 +1,66 @@
-/* Fondo general de la página */
-body {
-  background-color: #ffe6f0; /* rosado claro */
-  font-family: 'Bahnschrift', sans-serif;
-  margin: 0;
+/* Contenedor general de la malla: semestres en fila */
+#malla {
+  display: flex;
+  gap: 20px;
+  justify-content: center;
+  align-items: flex-start; /* que ramos queden alineados arriba */
+  flex-wrap: nowrap; /* evitar que semestres bajen */
   padding: 20px;
 }
 
-/* Título principal */
-.titulo {
-  color: #cc007a; /* rosado fuerte */
-  text-align: center;
-  font-size: 32px;
-  margin-bottom: 30px;
-}
-
-/* Contenedor general de la malla: fila con columnas (semestres) */
-#malla {
-  display: flex;
-  gap: 20px; /* espacio entre columnas */
-  justify-content: center;
-  align-items: flex-start; /* alinear al inicio en vertical */
-  flex-wrap: nowrap; /* evita que los semestres se bajen */
-  padding: 10px;
-  overflow-x: auto; /* permite scroll horizontal si hay muchos semestres */
-}
-
-/* Cada columna semestre */
+/* Cada columna de semestre */
 .semestre {
   display: flex;
-  flex-direction: column;
-  gap: 10px; /* espacio vertical entre ramos */
-  min-width: 250px; /* ancho fijo para columnas para evitar solapamiento */
-  max-width: 250px;
-  background: #fff0f7; /* un fondo suave para diferenciar semestres */
-  padding: 10px;
-  border-radius: 12px;
-  box-shadow: 0 3px 8px rgba(204, 0, 122, 0.15);
-  box-sizing: border-box;
+  flex-direction: column; /* ramos apilados verticalmente */
+  gap: 12px;
+  min-width: 180px; /* para que no se achiquen mucho */
+  background-color: #fff;
+  border-radius: 8px;
+  padding: 12px;
+  box-shadow: 0 2px 6px rgba(0,0,0,0.1);
 }
 
 /* Título del semestre */
 .semestre-titulo {
-  font-weight: bold;
+  font-weight: 700;
   font-size: 18px;
   color: #cc007a;
   text-align: center;
-  margin-bottom: 10px;
+  margin-bottom: 12px;
 }
 
-/* Estilo base para todos los ramos */
+/* Ramos */
 .ramo {
-  padding: 15px;
-  border-radius: 15px;
-  font-size: 16px;
-  text-align: center;
-  background-color: white;
-  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  padding: 10px;
+  border-radius: 10px;
   cursor: pointer;
-  transition: transform 0.2s;
-  user-select: none; /* evitar selección accidental */
+  transition: transform 0.15s ease;
+  font-size: 14px;
+  text-align: center;
+  user-select: none;
+  box-shadow: 0 1px 3px rgba(0,0,0,0.1);
 }
 
 /* Efecto hover */
 .ramo:hover {
-  transform: scale(1.03);
+  transform: scale(1.05);
 }
 
-/* Ramos aprobados: celeste + tachado */
+/* Estados de los ramos */
 .aprobado {
   color: #00bfff;
   text-decoration: line-through;
   background-color: #e0f7ff;
 }
 
-/* Ramos desbloqueados pero no aprobados: celeste sin tachar */
 .pendiente {
   color: #00bfff;
   background-color: #f0fbff;
 }
 
-/* Ramos bloqueados: gris y opaco */
 .bloqueado {
   color: #aaa;
   background-color: #f2f2f2;
   opacity: 0.6;
+  cursor: not-allowed;
 }
