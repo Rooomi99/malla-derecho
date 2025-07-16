@@ -1,41 +1,36 @@
-/* Fondo general de la página */
 body {
-  background-color: #ffe6f0; /* rosado claro */
+  background-color: #ffe6f0;
   font-family: 'Aharoni', 'Bahnschrift', sans-serif;
   margin: 0;
   padding: 20px;
-  overflow-x: hidden; /* Oculta barra horizontal */
+  overflow-x: hidden;
 }
 
-/* Título principal */
 .titulo {
-  color: #cc007a; /* rosado fuerte */
+  color: #cc007a;
   text-align: center;
   font-size: 32px;
   margin-bottom: 30px;
 }
 
-/* Contenedor de semestres (filas horizontales) */
 #malla {
   display: flex;
-  flex-wrap: nowrap; /* No permite que se rompa la fila */
-  overflow-x: auto;  /* Scroll horizontal */
+  flex-wrap: nowrap;
+  overflow-x: auto;
   gap: 20px;
   padding-bottom: 10px;
 }
 
-/* Cada columna semestre */
 .semestre {
   display: flex;
   flex-direction: column;
   gap: 10px;
-  background-color: #fde7f0; /* color suave para separar semestres */
+  background-color: #fde7f0;
   border-radius: 15px;
   padding: 10px;
   min-width: 280px;
 }
 
-/* Título del semestre */
 .semestre-titulo {
   font-weight: bold;
   margin-bottom: 15px;
@@ -44,7 +39,6 @@ body {
   font-size: 18px;
 }
 
-/* Ramos */
 .ramo {
   width: 250px;
   padding: 15px;
@@ -53,18 +47,16 @@ body {
   text-align: center;
   background-color: white;
   box-shadow: 0 4px 6px rgba(0,0,0,0.1);
-  border: 2px solid #f7a8c4; /* línea continua rosada suave */
+  border: 2px solid #f7a8c4;
   cursor: pointer;
   transition: transform 0.2s;
   position: relative;
 }
 
-/* Efecto hover */
 .ramo:hover {
   transform: scale(1.03);
 }
 
-/* Ramos aprobados */
 .aprobado {
   color: #00bfff;
   text-decoration: line-through;
@@ -72,15 +64,12 @@ body {
   border-color: #00bfff;
 }
 
-/* Ramos pendientes (desbloqueados y no aprobados) - en color morado */
 .pendiente {
-  color: #6a0dad; /* Morado fuerte */
-  background-color: #f3e8ff; /* Morado claro */
-  border-color: #b47be3; /* Morado suave */
+  color: #6a0dad;
+  background-color: #f3e8ff;
+  border-color: #b47be3;
 }
 
-
-/* Ramos bloqueados */
 .bloqueado {
   color: #aaa;
   background-color: #f2f2f2;
@@ -88,10 +77,9 @@ body {
   border-color: #ccc;
 }
 
-/* Tooltip estilo básico */
 .ramo[title]:hover::after {
   content: attr(title);
-  white-space: pre-line; /* para que \n funcione en tooltip */
+  white-space: pre-line;
   position: absolute;
   bottom: 110%;
   left: 50%;
@@ -108,12 +96,9 @@ body {
   box-shadow: 0 2px 6px rgba(0,0,0,0.2);
 }
 
-/* Ocultar barra de desplazamiento horizontal (solo Webkit: Chrome, Safari) */
 #malla::-webkit-scrollbar {
   display: none;
 }
-
-/* Para Firefox */
 #malla {
   scrollbar-width: none;
 }
