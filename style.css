@@ -17,7 +17,7 @@ body {
 /* Contenedor general de la malla: fila con columnas (semestres) */
 #malla {
   display: flex;
-  gap: 20px; /* espacio entre columnas de semestres */
+  gap: 20px; /* espacio entre semestres */
   justify-content: center;
   padding: 10px;
 }
@@ -41,7 +41,7 @@ body {
 
 /* Estilo base para todos los ramos */
 .ramo {
-  width: 100%;
+  width: 250px;
   padding: 15px;
   border-radius: 15px;
   font-size: 16px;
@@ -77,3 +77,4 @@ body {
   background-color: #f2f2f2;
   opacity: 0.6;
 }
+
