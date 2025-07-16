@@ -1,15 +1,16 @@
 /* Fondo general de la página */
 body {
-  background-color: #ffe6f0; /* rosado claro */
+  background-color: #ffe6f0;
   font-family: 'Bahnschrift', sans-serif;
   margin: 0;
   padding: 20px;
   box-sizing: border-box;
+  overflow-x: hidden;
 }
 
 /* Título principal */
 .titulo {
-  color: #cc007a; /* rosado fuerte */
+  color: #cc007a;
   text-align: center;
   font-size: 32px;
   margin-bottom: 30px;
@@ -21,15 +22,16 @@ body {
   flex-direction: row;
   flex-wrap: nowrap;
   overflow-x: auto;
-  gap: 30px;
-  padding: 10px;
+  gap: 40px; /* espacio entre columnas de semestre */
+  padding-bottom: 20px;
+  margin-bottom: 30px;
 }
 
 /* Columna por semestre */
 .semestre {
   display: flex;
   flex-direction: column;
-  gap: 10px;
+  gap: 20px; /* espacio entre ramos */
   min-width: 240px;
   flex-shrink: 0;
 }
@@ -50,6 +52,7 @@ body {
   font-size: 14px;
   text-align: center;
   background-color: white;
+  border: 2px dashed #cc007a; /* borde entrelineado */
   box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
   cursor: pointer;
   transition: transform 0.2s;
@@ -60,22 +63,31 @@ body {
   transform: scale(1.03);
 }
 
-/* Ramos aprobados: celeste + tachado */
 .aprobado {
   color: #00bfff;
   text-decoration: line-through;
   background-color: #e0f7ff;
 }
 
-/* Ramos desbloqueados pero no aprobados: celeste sin tachar */
 .pendiente {
   color: #00bfff;
   background-color: #f0fbff;
 }
 
-/* Ramos bloqueados: gris y opaco */
 .bloqueado {
   color: #aaa;
   background-color: #f2f2f2;
   opacity: 0.6;
+}
+
+/* Estilo para barra scroll */
+#malla::-webkit-scrollbar {
+  height: 12px;
+}
+#malla::-webkit-scrollbar-thumb {
+  background-color: #cc007a;
+  border-radius: 6px;
+}
+#malla::-webkit-scrollbar-track {
+  background-color: #ffe6f0;
 }
