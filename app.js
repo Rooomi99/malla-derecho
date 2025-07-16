@@ -1,7 +1,7 @@
-// Cargar ramos aprobados guardados o iniciar lista vacía
+// Lista de ramos aprobados desde localStorage o vacía
 let ramosAprobados = JSON.parse(localStorage.getItem('ramosAprobados')) || [];
 
-// Malla completa de ramos con todos los datos
+// Malla de ramos (completa)
 const malla = [
   { "nombre": "Derecho Romano I", "semestre": 1, "creditos": 5, "prerrequisitos": [] },
   { "nombre": "Fundamentos Filosóficos del Derecho", "semestre": 1, "creditos": 10, "prerrequisitos": [] },
@@ -58,31 +58,36 @@ const malla = [
   { "nombre": "Clínica Jurídica II", "semestre": 10, "creditos": 10, "prerrequisitos": ["Clínica Jurídica I"] }
 ];
 
-// Agregar ID único a cada ramo para evitar problemas con nombres repetidos
-malla.forEach((ramo, index) => {
-  ramo._id = `${ramo.nombre}-${ramo.semestre}-${index}`;
+// Guardamos los IDs únicos para diferenciar ramos con mismo nombre y semestre
+malla.forEach((ramo, i) => {
+  ramo._id = `${ramo.nombre}-${ramo.semestre}-${i}`;
 });
 
 renderMalla(malla);
+actualizarCreditos();
 
+document.getElementById('buscador').addEventListener('input', filtrarRamos);
 document.getElementById('btnLimpiar').addEventListener('click', () => {
   ramosAprobados = [];
   localStorage.removeItem('ramosAprobados');
   renderMalla(malla);
+  actualizarCreditos();
+});
+document.getElementById('btnOscuro').addEventListener('click', () => {
+  document.body.classList.toggle('oscuro');
 });
 
 function renderMalla(malla) {
   const contenedor = document.getElementById('malla');
   contenedor.innerHTML = '';
-
-  // Agrupar por semestre
   const semestres = {};
-  malla.forEach(ramo => {
+
+  malla.forEach((ramo) => {
     if (!semestres[ramo.semestre]) semestres[ramo.semestre] = [];
     semestres[ramo.semestre].push(ramo);
   });
 
-  Object.keys(semestres).sort((a,b) => a-b).forEach(semestre => {
+  Object.keys(semestres).sort((a,b) => a - b).forEach(semestre => {
     const columna = document.createElement('div');
     columna.classList.add('semestre');
 
@@ -94,8 +99,6 @@ function renderMalla(malla) {
     semestres[semestre].forEach(ramo => {
       const div = document.createElement('div');
       div.classList.add('ramo');
-
-      // Tooltip con créditos y prerequisitos
       div.setAttribute('data-tooltip', `Créditos: ${ramo.creditos}\nPrerrequisitos: ${ramo.prerrequisitos.length ? ramo.prerrequisitos.join(', ') : 'Ninguno'}`);
 
       const aprobado = ramosAprobados.includes(ramo._id);
@@ -114,15 +117,17 @@ function renderMalla(malla) {
       div.textContent = ramo.nombre;
 
       div.addEventListener('click', () => {
-        if (!prerequisitosCumplidos && ramo.prerrequisitos.length > 0) return; // no permite si está bloqueado
-        const idx = ramosAprobados.indexOf(ramo._id);
-        if (idx >= 0) {
-          ramosAprobados.splice(idx, 1);
+        if (div.classList.contains('bloqueado')) return; // no cambiar estado si está bloqueado
+
+        const index = ramosAprobados.indexOf(ramo._id);
+        if (index >= 0) {
+          ramosAprobados.splice(index, 1);
         } else {
           ramosAprobados.push(ramo._id);
         }
         localStorage.setItem('ramosAprobados', JSON.stringify(ramosAprobados));
         renderMalla(malla);
+        actualizarCreditos();
       });
 
       columna.appendChild(div);
@@ -132,3 +137,25 @@ function renderMalla(malla) {
   });
 }
 
+function filtrarRamos(e) {
+  const filtro = e.target.value.toLowerCase();
+  const ramos = document.querySelectorAll('.ramo');
+  ramos.forEach(ramo => {
+    const texto = ramo.textContent.toLowerCase();
+    ramo.style.display = texto.includes(filtro) ? 'block' : 'none';
+  });
+}
+
+function actualizarCreditos() {
+  let total = 0;
+  let acumulado = 0;
+
+  malla.forEach((ramo) => {
+    total += ramo.creditos;
+    if (ramosAprobados.includes(ramo._id)) {
+      acumulado += ramo.creditos;
+    }
+  });
+
+  document.getElementById('creditos').textContent = `Créditos: ${acumulado} de ${total}`;
+}
