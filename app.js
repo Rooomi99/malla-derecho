@@ -1,48 +1,62 @@
 // app.js
 
-// Lista de ramos que se consideran ya aprobados
-const ramosAprobados = [
-  "Derecho Romano I",
-  "Fundamentos Filosóficos del Derecho",
-  "Historia del Derecho"
-];
+// Cargar desde localStorage los ramos aprobados, o usar lista vacía
+let ramosAprobados = JSON.parse(localStorage.getItem('ramosAprobados')) || [];
 
-// Cargamos el archivo malla.json
+// Cargar la malla desde el archivo JSON
 fetch('malla.json')
-  .then(response => response.json())
+  .then(res => res.json())
   .then(malla => {
-    mostrarMalla(malla);
-  })
-  .catch(error => {
-    console.error("Error al cargar la malla:", error);
+    renderMalla(malla);
+
+    // Guardamos malla completa en memoria para futuros clics
+    window.mallaData = malla;
   });
 
-// Función principal para mostrar la malla
-function mostrarMalla(malla) {
+// Función para renderizar la malla
+function renderMalla(malla) {
   const contenedor = document.getElementById('malla');
+  contenedor.innerHTML = ''; // Limpia antes de renderizar
 
   malla.forEach(ramo => {
     const div = document.createElement('div');
     div.classList.add('ramo');
-    
-    // Evaluar si el ramo está aprobado
-    const aprobado = ramosAprobados.includes(ramo.nombre);
 
-    // Evaluar si se cumplen todos los prerrequisitos
+    const aprobado = ramosAprobados.includes(ramo.nombre);
     const prerequisitosCumplidos = ramo.prerrequisitos.every(pr => ramosAprobados.includes(pr));
 
     if (aprobado) {
       div.classList.add('aprobado');
-    } else if (!prerequisitosCumplidos && ramo.prerrequisitos.length > 0) {
+    } else if (!prerrequisitosCumplidos && ramo.prerrequisitos.length > 0) {
       div.classList.add('bloqueado');
     } else {
       div.classList.add('pendiente');
     }
 
-    // Mostrar texto del ramo
     div.innerText = `${ramo.nombre} (Sem ${ramo.semestre})`;
 
-    // Agregar al contenedor principal
+    // Hacer clic para marcar/desmarcar como aprobado
+    div.addEventListener('click', () => toggleAprobado(ramo.nombre));
+
     contenedor.appendChild(div);
   });
 }
+
+// Función que alterna aprobado/no aprobado y vuelve a renderizar
+function toggleAprobado(nombreRamo) {
+  const index = ramosAprobados.indexOf(nombreRamo);
+
+  if (index >= 0) {
+    ramosAprobados.splice(index, 1); // quitar si ya estaba
+  } else {
+    ramosAprobados.push(nombreRamo); // agregar si no estaba
+  }
+
+  // Guardar en localStorage
+  localStorage.setItem('ramosAprobados', JSON.stringify(ramosAprobados));
+
+  // Volver a renderizar
+  renderMalla(window.mallaData);
+}
+
+
